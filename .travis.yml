@@ -11,7 +11,7 @@ env:
 
 addons:
   sonarcloud:
-    organization: "szotaa"
+    organization: "szotaa-github"
     token:
       secure: $SONAR_TOKEN
 

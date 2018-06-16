@@ -56,8 +56,7 @@
                 <version>0.8.1</version>
                 <configuration>
                     <excludes>
-                        <exclude>in/sivalabs/freelancerkit/entities/*</exclude>
-                        <exclude>in/sivalabs/freelancerkit/*Application</exclude>
+                        <exclude>pl/szotaa/travisdemo/*Application</exclude>
                     </excludes>
                 </configuration>
                 <executions>
