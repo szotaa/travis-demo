@@ -4,6 +4,8 @@ jdk: oraclejdk8
 env:
   global:
   - secure: "RVZHxtqjWaA1eXTCnt7Ia6qvJDxhvaEVEdXOfesPFyQnwq+t0vRjRaB8wogaWp7fFlp2d9hJFErb0TjmVRYvQVzfEh5R9YWrtlI8yvWFXv7qCmuSulpPTyBDxerJto7PIg15CDXSU15rTDkdH9ybZjnQY5K5h7ap+MjVAsD+WOoeJ6ndzEJJlA4vOp0dvx1l63ZG6i9oyzdmcWkioKESWhkmadvyXtn6H0+HJcTSq+5Drwj9QdLoZF+kFfl+eWkdDI52UwVYmvHGVxYIfSKwP7+KXWZyudfB1E1vKKytkej9XZy1dLZrW/ALdw6rqBnUzgsuzTX0SeyQpFjNoJreT1azWd6q8n3skJLbMKZP2ZUZdr9/oDxDU+kWWJk9LyGYgLBlg9i/kYsn3qbDVBxZEix4MVWSiS+NLT0EihWWSQ9XmYAIt9FVX8EnCVkUY7kloglUDzNFnFjw9LOXljZh75/03Rs1m/rQdsZcivYTLYJFTwmOvCytYsbvqwpyvCzWkkLbS/DA3NMMXuaRJQeA5HTIfhD7POIpcgyxoxKMEc6cJSYnIrmc5hR84zNiEHVKtltPuvX8RBqU9DNGfScH4i27jxCxBnoPOE5m6Zj25+cxSAVYnVbi3wWEyxlLxdusurxpqV36i84b69lZV8ZY2Wood/T7iVV6Xx95teREtlo="
+  - secure: "fg4LgKxuURXoomd9d2S4cjI7C1nLT+FZPmvjrktVffm7DiV5pI1UFnuiGozhWRcyWWE0S3fso8Nm3V590xnc4jWkIKwaJnokwiDF2pzDKGhxhSbvltjGA/fNztIjX8A/PJHo0Ln5fAJj+TNVP9pmidQXbpe52ukrj0SLLiOzDIv3/iI41PZt00ApqFF0a8ne8M6Z09YLafeKRIprvCU/G6JDW9nQchxtbAQbw5Q1zlQ9+KhalVFKGKk2tN0qeT/RqY4oVP4ujrFqAxhq/typBtn4fSh5KZpJ3ufWnjiRUiisa8W0wzrPdSq2Z6qR6YAIsVcroEMsk3lcYfpbPooWY5ChIW0znzdMSnXP5FNNaw3AlnQgFSnLSGxNDRazvgcPH6A7z/N5/vkON5uHiWF9UqktlF6HygdkIez3W7fECvod7qF4mKmWHWpnc5WOji+s53cLmqsKdxnpCKPcRc49TKy0C0oekbYth0ccLWkHr+8jnkbyubfZ1G/bVSEsGyW8jMrLXwpydY+96zKVbHjs+/go2o7YdpD5fTq4f10YAr+iFSZ8lFBl3YhHYUAWsmB5sWeeGh1061qKNgeWXmEmaS0WTHRWKdoA9dP2ZCsYl4Cn0PQehh+syvRwje8xPe5LpH+yAofuTO2lzQkiKobmS3jtczZB/iFUWsEImT/mwzQ="
+  - secure: "J0akqtQ8+VXMwQK9ZksPt+IZ7cr18TsB9mmbxDGXP+Ju+wdqhEfyb/3AFYwlh9Q6IjEMSr07gTsX0ayBsqoq2KW79lJeb3i/T45gYpdaXm42wHtD49PU3wKOlWvMbuDfx6AddkA6Y3T9i6TpfOo/NbJ08MfGBlZ9JhLhtwf4UA390fObeTeaPDlelYi783ZeH3YJKKglAR4BsXvT9Qaiv3w5B3cuEv0DYKxtWa8iNfVp0EhaKZb+zVvaRtLLIdOx/h6+t3onzLDh5tOdbX51b8YQ6k4LgV0mrt9zkW9StcHmGUNjaL8R7IGExgXuuQNUwyUQ8C1dtKFLm8ZJWqYjBSV+xNg+y5YPOs75EE2Ub/6Pu4wnWh9fFU8LfOcYyoTGT5ejDzPiPoKf+TMd5XiSaRG4HQAEvWUeaFPjZ4Zolvovc1a4Fdclu/KGGj+F7r4/X/vW974GA6MkcHJk0BAqjwvyqOEGcMI3Xy0uoylqpo0izzz+oma5j8SxOwaj0j56nUQI+WB/LoBljWcl3taUjrqfCvggC3dgIY7zNebyiPR28h3EryIZyDMpbBTZ99Y5qQufK+xHQ6YomPyTvIJwsVv8Fr4zwULOfWXDGikDF0VehO5a/k0+nMrY6eXxlP98mxglWTvZCvQYlJ3uD0sd5XVppacsSKiILEW5Bypob04="
 
 addons:
   sonarcloud:
@@ -11,6 +13,18 @@ addons:
     token:
       secure: $SONAR_TOKEN
 
+sudo: required
+
+services:
+  - docker
+
+after_success:
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+- export IMAGE_NAME=sivaprasadreddy/freelancerkit
+- docker build -t $IMAGE_NAME:$COMMIT .
+- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
+- docker push $IMAGE_NAME
 
 script:
 - ./mvnw clean install -B
