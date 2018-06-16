@@ -13,7 +13,8 @@ addons:
   sonarcloud:
     organization: "szotaa-github"
     token:
-      secure: $SONAR_TOKEN
+      secure: "cVVeXQGm8JkSbAbrSc77ZwG5+hQd9d0wzUkGkNqxxzKJMwTSdSHPhB1hR1LGaYcXsBYWLFwMzB/sHdyUH51TUvC5CTj90rogRp2S+3f0nozaqJEwM85+w/s1pTiKlf+6qnnGeFg/SGAFIV9VVKNTCmEznRSHftOtTm+ePopYDxA/Lei8uStIkL4XflaBiD+wfKYU/SK/A0/F4iVPu4UB7hChPAX+EHBdyBreKjiY4P/vrBy7MtVpEpmioaVVUFdGAB+u9JvETZwxi+riBTG99zR7plouJbudbsUkypTafyCgtgq/N5VHh1SlfDcdOpn4q8uIw9XErqUToJu2QW58IQxs1OlKnBfAQ6C52bGiEV8HctEbOs3Wfm3+qT3K0skvHMl2xoEXSJlOyP+nGXAlDd3O3t8FC7dWbIJJMAdUmHmSKP4HTsPqw21m1y/iQ6/8tzPDMDjU2QjitY8W6yH9oGOuJdbLOSwzCIdGkQFi18q2ekjdp2UFpRuNPZN941uiblsmGQJuoRF2iM77E1OOLVm9t8vkBsDlVXdIPtjdGmN+UuGbDnPjGJF50M9RdzLHe5361Xu0leMU9yurN1Zc4PwdT2fYBJQKoekLym7FpDQ87gIBlsW0tmE+ucRwbmG+oGAQGqiyM8gseoDlwArAYFj6fypDwFUp3YnJ/bYajio="
+
 
 sudo: required
 
